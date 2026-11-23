@@ -48,19 +48,30 @@ function Symbol({ kind, ...props }) {
   )
 }
 
+function SkyLayer({ depth, children }) {
+  return (
+    <div className={'sky-depth sky-depth--' + depth}>
+      <div className="sky-track">
+        <div className="sky-tile">{children}</div>
+        <div className="sky-tile">{children}</div>
+      </div>
+    </div>
+  )
+}
+
 function Sky({ skyRef }) {
   return (
     <div className="sky" ref={skyRef} aria-hidden="true">
       <div className="sky-grain" />
-      <div className="sky-depth sky-depth--far">
+      <SkyLayer depth="far">
         {dots.map(({ x, y, size }, i) => (
           <i className="sky-dot" key={i} style={{
             '--x': x + '%', '--y': y + '%', '--size': size + 'px',
             '--duration': 5 + i % 9 + 's', '--delay': -(i % 14) + 's',
           }} />
         ))}
-      </div>
-      <div className="sky-depth sky-depth--near">
+      </SkyLayer>
+      <SkyLayer depth="near">
         {accents.map(([x, y, size, kind, color], i) => (
           <span className="sky-position" key={i} style={{
             '--x': x + '%', '--y': y + '%', '--size': size + 'px',
@@ -70,7 +81,7 @@ function Sky({ skyRef }) {
             <Symbol className={'sky-charm ' + color} kind={kind} />
           </span>
         ))}
-      </div>
+      </SkyLayer>
       <div className="frame" />
     </div>
   )

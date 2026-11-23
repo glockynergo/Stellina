@@ -64,13 +64,36 @@ p, h1 { margin: 0; }
 }
 
 .sky-depth {
+  --drift-duration: 96s;
   position: absolute;
-  inset: 0;
+  inset: -14px;
   transform: translate(var(--pointer-x, 0px), var(--pointer-y, 0px));
   transition: transform 0.45s ease-out;
 }
 .sky-depth--far {
+  --drift-duration: 156s;
   transform: translate(calc(var(--pointer-x, 0px) * .4), calc(var(--pointer-y, 0px) * .4));
+}
+
+.sky-track {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  animation: sky-drift var(--drift-duration) linear infinite;
+}
+.sky-tile {
+  position: relative;
+  flex: 0 0 50%;
+}
+.sky-depth--far .sky-tile {
+  background:
+    radial-gradient(ellipse 21% 39% at 25% 65%, #ffd8e438, transparent),
+    radial-gradient(ellipse 18% 32% at 74% 38%, #ffdbc72e, transparent);
+}
+
+@keyframes sky-drift {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
 }
 
 .sky-dot, .sky-position {
@@ -357,13 +380,15 @@ p, h1 { margin: 0; }
 }
 
 @media (max-width: 540px) {
+  .sky-depth { --drift-duration: 58s; }
+  .sky-depth--far { --drift-duration: 94s; }
   .frame { inset: 9px; border-radius: 17px; }
   .sky-position { width: calc(var(--size) * .78); height: calc(var(--size) * .78); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; }
-  .sky-dot, .sky-charm { animation: none; }
+  .sky-dot, .sky-charm, .sky-track { animation: none; }
   .sky-depth { transform: none; transition: none; }
   .heart-art, .replay { transition: none; }
 }
