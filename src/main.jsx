@@ -6,6 +6,7 @@ import '@fontsource-variable/cormorant-garamond/wght.css'
 import '@fontsource-variable/cormorant-garamond/wght-italic.css'
 import '@fontsource-variable/nunito/wght.css'
 import { dedications } from './dedications'
+import { Fireworks } from './Fireworks'
 import './styles.css'
 
 const HEART = 'M200 350C174 330 35 234 15 144C-1 75 39 22 96 19C143 16 182 41 200 80C218 41 257 16 304 19C361 22 401 75 385 144C365 234 226 330 200 350Z'
@@ -59,10 +60,11 @@ function SkyLayer({ depth, children }) {
   )
 }
 
-function Sky({ skyRef }) {
+function Sky({ skyRef, finale }) {
   return (
     <div className="sky" ref={skyRef} aria-hidden="true">
       <div className="sky-grain" />
+      {finale && <Fireworks />}
       <SkyLayer depth="far">
         {dots.map(({ x, y, size }, i) => (
           <i className="sky-dot" key={i} style={{
@@ -254,7 +256,7 @@ function App() {
 
   return (
     <main className="page" onPointerMove={parallax} onPointerLeave={resetParallax}>
-      <Sky skyRef={sky} />
+      <Sky skyRef={sky} finale={last && !reduced} />
       <section className="experience" aria-labelledby="site-title">
         <header className="masthead">
           <span aria-hidden="true" className="masthead-mark"><i /><Symbol kind="glint" /><i /></span>

@@ -55,6 +55,15 @@ p, h1 { margin: 0; }
   background-size: 180px;
 }
 
+.fireworks {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #6d204321;
+}
+
 .frame {
   position: absolute;
   inset: 19px;
